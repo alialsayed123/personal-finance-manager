@@ -12,9 +12,8 @@ export interface AuthenticatedUser {
 
 export const getAuthenticatedUser = cache(async (): Promise<AuthenticatedUser> => {
   const supabase = await createClient();
-  const {
-    data: { claims },
-  } = await supabase.auth.getClaims();
+const { data } = await supabase.auth.getClaims();
+const claims = data?.claims ?? null;
 
   if (!claims?.sub) {
     redirect("/login");
